@@ -3,7 +3,7 @@ const cors = require('cors');
 const DB = require('./config/db');
 const app = express();
 const server = require('http').createServer(app);
-const io = require('socket.io')(server);
+const io = require('socket.io')(server, { cors: { origin: '*' } });
 const messageModel = require('./models/messageModel');
 const userModel = require('./models/userModel');
 
@@ -32,11 +32,20 @@ app.post("/api/messages", async (req, res) => {
         const newMessage = await messageModel.find({
             $or: [{ sender: user1, receiver: user2 },
             { sender: user2, receiver: user1 }]
-        }).populate('user', ['name']);
+        });
         return res.status(200).json(newMessage);
     } catch (error) {
         console.log(error);
     }
+});
+
+app.get("/api/messages/all", async (req, res) => {
+    messageModel.find()
+        .exec((err, data) => {
+            if (data) {
+                return res.status(200).json(data);
+            }
+        });
 });
 
 // Socket
@@ -46,32 +55,31 @@ io.on('connection', socket => {
         socket.emit('join', { msg: "user joioned..!" })
     });
 
-    socket.on('message', async (sender, message) => {
-        socket.emit('message', (sender, message));
+    socket.on('message', async ({ sender, message }) => {
         const _admin = await userModel.findOne({ role: 'admin' });
         if (_admin) {
             const _message = new messageModel({ sender, receiver: _admin._id, message });
             _message.save((err, data) => {
                 if (data) {
-                    io.to(sender).emit('message', message);
-                    io.to(receiver).emit('message', message);
+                    io.to(sender).emit('message', data);
+                    io.to(receiver).emit('message', data);
                 }
             });
         }
     });
 
-    socket.on('adminMessage', async (sender, receiver, message) => {
+    socket.on('adminMessage', async ({ sender, receiver, message }) => {
         const _message = new messageModel({ sender, receiver, message });
         _message.save((err, data) => {
             if (data) {
-                io.to(sender).emit('message', message);
-                io.to(receiver).emit('message', message);
+                io.to(sender).emit('message', data);
+                io.to(receiver).emit('message', data);
             }
         });
     });
 
     socket.on('disconnect', function () {
-        socket.emit('disconnect', { msg: "user disconnected" });
+        socket.emit('notConnect', { msg: "user disconnected" });
     });
 
 });
