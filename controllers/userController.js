@@ -234,3 +234,33 @@ exports.userUnBan = (req, res) => {
             }
         })
 }
+
+exports.GetEmail = (req, res) => {
+    userModel.findOne({ email: req.body.email })
+        .exec((error, data) => {
+            if (error) return res.status(400).json(error.message);
+            if (data) {
+                return res.status(200).json({ success: true });
+            }
+            if (!data) {
+                return res.status(200).json({ success: false });
+            }
+        })
+}
+
+exports.updatePassword = (req, res) => {
+    const { email, password } = req.body;
+    const hashedPassword = passwordHash.generate(password);
+    let ModifyObj = {};
+    if (password) { ModifyObj.password = hashedPassword };
+
+    userModel.findOneAndUpdate(
+        { email: email },
+        { $set: ModifyObj },
+        { new: true }
+    )
+        .exec((error, user) => {
+            if (error) return res.status(400).json(error.message);
+            if (user) return res.status(200).json({ message: 'Password Update Successfully' });
+        });
+}
