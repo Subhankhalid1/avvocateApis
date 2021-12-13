@@ -1,11 +1,11 @@
 {
   "name": "new-folder",
   "version": "1.0.0",
+  "description": "",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "server": "nodemon server.js",
-    "start": "node server.js"
+    "server": "nodemon server.js"
   },
   "keywords": [],
   "author": "",
@@ -19,15 +19,5 @@
     "nodemon": "^2.0.15",
     "password-hash": "^1.2.2",
     "socket.io": "^4.3.2"
-  },
-  "devDependencies": {},
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Subhankhalid1/avvocateApis.git"
-  },
-  "bugs": {
-    "url": "https://github.com/Subhankhalid1/avvocateApis/issues"
-  },
-  "homepage": "https://github.com/Subhankhalid1/avvocateApis#readme",
-  "description": ""
+  }
 }
