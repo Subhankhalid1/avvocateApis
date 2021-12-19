@@ -5,7 +5,7 @@ const passwordHash = require('password-hash');
 const nodemailer = require('nodemailer');
 const auth = require("../Middleware/Middleware");
 //new  line for digital ocean server
-const sendgridTransport=require('nodemailer-sendgrid-transport');
+// const sendgridTransport=require('nodemailer-sendgrid-transport');
 exports.create = async (req, res) => {
     const { name, surname, email, dob, password, role } = req.body;
     userModel.findOne({ email: email })
@@ -88,17 +88,17 @@ exports.sendEmail = (req, res) => {
     if (_decode) {
         const { name, surname, email, message } = req.body;
 
-        const transporter = nodemailer.createTransport(sendgridTransport({
+        const transporter = nodemailer.createTransport({
             service: 'gmail',
             auth: {
-                user: process.env.SENDGRID_USER1,
-                pass: process.env.SENDGRID_API
+                user: 'devsubhan007@gmail.com',
+                pass: 'sub7991han'
             }
-        }));
+        });
 
         const mailOptions = {
             from: email,
-            to: 'infomyavvocatoapp@gmail.com',
+            to: 'devsubhan007@gmail.com',
             subject: 'Email by Avvaocato user',
             html: `
             <p>Name: ${name}</p>
