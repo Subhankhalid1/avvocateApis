@@ -4,7 +4,8 @@ const { jwtSecret } = require("../config/keys");
 const passwordHash = require('password-hash');
 const nodemailer = require('nodemailer');
 const auth = require("../Middleware/Middleware");
-
+//new  line for digital ocean server
+const sendgridTransport=require('nodemailer-sendgrid-transport');
 exports.create = async (req, res) => {
     const { name, surname, email, dob, password, role } = req.body;
     userModel.findOne({ email: email })
@@ -91,7 +92,7 @@ exports.sendEmail = (req, res) => {
             service: 'gmail',
             auth: {
                 user: 'infomyavvocatoapp@gmail.com',
-                pass: 'InFoMyAvVoCaToApPGmAiL210389!'
+                pass: process.env.SENDGRID_API
             }
         });
 
