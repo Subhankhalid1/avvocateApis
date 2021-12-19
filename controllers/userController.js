@@ -88,13 +88,13 @@ exports.sendEmail = (req, res) => {
     if (_decode) {
         const { name, surname, email, message } = req.body;
 
-        const transporter = nodemailer.createTransport({
+        const transporter = nodemailer.createTransport(sendgridTransport({
             service: 'gmail',
             auth: {
-                user: 'infomyavvocatoapp@gmail.com',
+                user: process.env.SENDGRID_USER1,
                 pass: process.env.SENDGRID_API
             }
-        });
+        }));
 
         const mailOptions = {
             from: email,
