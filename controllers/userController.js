@@ -90,14 +90,16 @@ exports.sendEmail = (req, res) => {
         const transporter = nodemailer.createTransport({
             service: 'gmail',
             auth: {
-                user: 'infomyavvocatoapp@gmail.com',
-                pass: 'InFoMyAvVoCaToApPGmAiL210389!'
+                // user: 'infomyavvocatoapp@gmail.com',
+                // pass: 'InFoMyAvVoCaToApPGmAiL210389!'
+                user:process.env.AUTH_EMAIL,
+                pass:process.env.AUTH_PASS
             }
         });
 
         const mailOptions = {
             from: email,
-            to: 'infomyavvocatoapp@gmail.com',
+            to: process.env.AUTH_EMAIL,
             subject: 'Email by Avvaocato user',
             html: `
             <p>Name: ${name}</p>
