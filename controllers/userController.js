@@ -4,7 +4,7 @@ const { jwtSecret } = require("../config/keys");
 const passwordHash = require('password-hash');
 const nodemailer = require('nodemailer');
 const auth = require("../Middleware/Middleware");
-
+require("dotenv").config()
 exports.create = async (req, res) => {
     const { name, surname, email, dob, password, role } = req.body;
     userModel.findOne({ email: email })
