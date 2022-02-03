@@ -89,17 +89,26 @@ exports.sendEmail = (req, res) => {
 
         const transporter = nodemailer.createTransport({
             service: 'gmail',
+            port: 465,
+            secure: true, // true for 465, false for other ports
+            logger: true,
+            debug: true,
+            secureConnection: false,
             auth: {
-                // user: 'infomyavvocatoapp@gmail.com',
-                // pass: 'InFoMyAvVoCaToApPGmAiL210389!'
-                user:process.env.AUTH_EMAIL,
-                pass:process.env.AUTH_PASS
+                user: 'rsubhankhalid@gmail.com',
+                pass: 'vsrcvbvivlannbbt'
+                // user: process.env.AUTH_EMAIL,
+                // pass: process.env.AUTH_PASS
+            },
+            tls: {
+                rejectUnAuthorized: true
             }
+
         });
 
         const mailOptions = {
             from: email,
-            to: process.env.AUTH_EMAIL,
+            to: 'rsubhankhalid@gmail.com',
             subject: 'Email by Avvaocato user',
             html: `
             <p>Name: ${name}</p>
@@ -129,14 +138,14 @@ exports.consultant = (req, res) => {
             service: 'gmail',
             auth: {
                 user: 'myavvocatoapp@gmail.com',
-                pass: 'MyAvVoCaToApPGmAiL210389!'
+                pass: 'mlimohwboxhcfffo'
             }
         });
 
         const mailOptions = {
             from: email,
             to: 'myavvocatoapp@gmail.com',
-            subject: 'Email by Avvaocato user',
+            subject: 'Email by Avvaocato Consultant Services',
             html: `
             <p>Name: ${name}</p>
             <p>Surname: ${surname}</p>
