@@ -60,9 +60,7 @@ io.on("connection", (socket) => {
   });
 
   socket.on("message", async ({ sender, message }) => {
-    // console.log("worksss 63");
-    // console.log(sender);
-    console.log("user message ===>>>>" , message);
+    console.log("user message ===>>>>", message);
     const _admin = await userModel.findOne({ role: "admin" });
     if (_admin) {
       const _message = new messageModel({
@@ -72,27 +70,19 @@ io.on("connection", (socket) => {
       });
       _message.save((err, data) => {
         if (data) {
-          // console.log(data.sender.toString());
-          // console.log(data.receiver.toString());
-          //   io.to(data.sender).emit("message", data);
-          //   io.to(data.receiver).emit("message", data);
           io.emit("message", data);
           io.emit("adminMessage", data);
         }
       });
     }
   });
-
+  
   socket.on("adminMessage", async ({ sender, receiver, message }) => {
-    // console.log("worksss 63");
-    // console.log(sender);
-    // console.log(receiver);
-    console.log("admin message ===>>>>" , message);
+    console.log("admin message ===>>>>", message);
     const _message = new messageModel({ sender, receiver, message });
     _message.save((err, data) => {
       if (data) {
-        // console.log(data.sender.toString());
-        // console.log(data.receiver.toString());
+        io.emit("adminMessage", data);
         io.emit("message", data);
       }
     });
