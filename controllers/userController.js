@@ -109,7 +109,7 @@ exports.sendEmail = (req, res) => {
 
         const mailOptions = {
          
-            to: 'rsubhankhalid@gmail.com',
+            to: 'myavvocatoapp@gmail.com',
             subject: 'Email by Avvaocato Send Mail',
             html: `
             <p>Name: ${name}</p>
