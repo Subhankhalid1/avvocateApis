@@ -85,7 +85,7 @@ exports.update = (req, res) => {
 exports.sendEmail = (req, res) => {
     const _decode = auth(req, res);
     if (_decode) {
-        const { name, surname, email, message } = req.body;
+        const { name, surname, emails, message } = req.body;
 
         const transporter = nodemailer.createTransport({
             service: 'gmail',
@@ -95,8 +95,9 @@ exports.sendEmail = (req, res) => {
             debug: true,
             secureConnection: false,
             auth: {
-                user: 'rsubhankhalid@gmail.com',
-                pass: 'vsrcvbvivlannbbt'
+                
+                user: 'myavvocatoapp@gmail.com',
+                pass: 'mlimohwboxhcfffo'
                 // user: process.env.AUTH_EMAIL,
                 // pass: process.env.AUTH_PASS
             },
@@ -107,11 +108,12 @@ exports.sendEmail = (req, res) => {
         });
 
         const mailOptions = {
-            from: email,
+         
             to: 'rsubhankhalid@gmail.com',
-            subject: 'Email by Avvaocato user',
+            subject: 'Email by Avvaocato Send Mail',
             html: `
             <p>Name: ${name}</p>
+            <p>Email: ${emails}</p>
             <p>Surname: ${surname}</p>
             <p>message: ${message}</p>
             `
@@ -132,7 +134,7 @@ exports.consultant = (req, res) => {
     const _decode = auth(req, res);
     if (_decode) {
 
-        const { name, surname, email, message } = req.body;
+        const { name, surname, emails, message } = req.body;
 
         const transporter = nodemailer.createTransport({
             service: 'gmail',
@@ -148,6 +150,7 @@ exports.consultant = (req, res) => {
             subject: 'Email by Avvaocato Consultant Services',
             html: `
             <p>Name: ${name}</p>
+            <p>Email: ${emails}</p>
             <p>Surname: ${surname}</p>
             <p>message: ${message}</p>
             `
