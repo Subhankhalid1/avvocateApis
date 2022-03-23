@@ -95,7 +95,6 @@ exports.sendEmail = (req, res) => {
             debug: true,
             secureConnection: false,
             auth: {
-                
                 user: 'myavvocatoapp@gmail.com',
                 pass: 'mlimohwboxhcfffo'
                 // user: process.env.AUTH_EMAIL,
@@ -108,7 +107,7 @@ exports.sendEmail = (req, res) => {
         });
 
         const mailOptions = {
-         
+            from:emails,
             to: 'myavvocatoapp@gmail.com',
             subject: 'Email by Avvaocato Send Mail',
             html: `
@@ -145,7 +144,7 @@ exports.consultant = (req, res) => {
         });
 
         const mailOptions = {
-            from: email,
+            from: emails,
             to: 'myavvocatoapp@gmail.com',
             subject: 'Email by Avvaocato Consultant Services',
             html: `
